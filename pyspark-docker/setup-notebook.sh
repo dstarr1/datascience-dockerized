@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ipython profile create pyspark
+#ipython profile create pyspark
+ipython profile create --ipython-dir=/.ipython pyspark
 
 echo "c.IPKernelApp.pylab= 'inline' " >> /.ipython/profile_pyspark/ipython_notebook_config.py
 echo "c.NotebookApp.ip = '*' " >>/.ipython/profile_pyspark/ipython_notebook_config.py

@@ -38,6 +38,12 @@ ADD setup-notebook.sh /setup-notebook.sh
 
 RUN chmod +x /setup-notebook.sh
 
+#WORKDIR "/"
+
+# #RUN ipython profile create --ipython-dir=/.ipython
+
+RUN rm -Rf /.ipython
+
 RUN sh /setup-notebook.sh
 
 WORKDIR /notebook
