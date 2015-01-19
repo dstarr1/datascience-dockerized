@@ -17,11 +17,47 @@ boot2docker ip
 #       http://192.168.59.103:8888
 
 
-* runs the vm without ipython:
+# runs the vm without ipython:
 docker run -it -p 8888:8888 -v $(PWD):/mnt samklr/pyspark-notebook
 
-* Run this seperately (kernel doesn't crap out as when a single command):
+# works:Run this seperately (kernel doesn't crap out as when a single command):
 ipython notebook --ipython-dir=/.ipython --profile=pyspark
+ipython kernel --ipython-dir=/.ipython --profile=pyspark
+
+
+
+
+######################
+##### This section is to (attempt to) run an ipython kernel in one docker container
+# - then connect with another docker container:
+
+# 1) kernel docker container:
+sh build-image.sh
+docker run -it --publish-all -v $(PWD):/mnt --rm --name ipython-kernel samklr/pyspark-notebook
+ipython kernel --ipython-dir=/mnt/ipython --profile=pyspark
+# --ip=192.168.59.103
+
+
+# 2) client/console docker container:
+docker run -it --publish-all -v $(PWD):/mnt --link=ipython-kernel:ipython-kernel samklr/pyspark-notebook
+ipython console --ipython-dir=/mnt/ipython --profile=pyspark --existing kernel-19.json
+#  -> Note, I tried changing the 'ip' in the kernel-7.json to {boot2docker ip}, but in both cases get a "ERROR: Kernel did not respond"
+
+
+
+
+* So kernel server publishes all
+docker run --publish-all
+* client server can then read those
+
+* TODO need a script which crafts a Dockerfile
+
+
+
+
+* TODO want to have json witten to volumn
+* TODO Want to look at json
+* TODO want to connect to kernel using another docker machine?
 
 
 

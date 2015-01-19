@@ -42,7 +42,7 @@ RUN chmod +x /setup-notebook.sh
 
 # #RUN ipython profile create --ipython-dir=/.ipython
 
-RUN rm -Rf /.ipython
+RUN rm -Rf /mnt/ipython
 
 RUN sh /setup-notebook.sh
 
